@@ -40,5 +40,3 @@ export default function StarShipTile({item, onImageLoadError}) {
 		</div>
 	);
 }
-
-// export const PlanetInfoWithPlanet = withPlanet(PlanetTile);

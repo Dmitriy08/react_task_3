@@ -60,16 +60,19 @@ export default function CharacterInfo({ id, character }) {
           <dl>
               <CharacterInfoRow name='Skin color' value={character.skin_color} />
           </dl>
-          <dl>
-              <CharacterInfoRow name='Eye color' value={character.eye_color} />
-          </dl>
-          <dl>
-              <CharacterInfoRow name='Birth year' value={character.birth_year} />
-          </dl>
-          <dl>
-              <CharacterInfoRow name='Gender' value={character.gender} />
-          </dl>
+
       </div>
+        <div>
+            <dl>
+                <CharacterInfoRow name='Eye color' value={character.eye_color} />
+            </dl>
+            <dl>
+                <CharacterInfoRow name='Birth year' value={character.birth_year} />
+            </dl>
+            <dl>
+                <CharacterInfoRow name='Gender' value={character.gender} />
+            </dl>
+        </div>
     </InfoWRapper>
   );
 }

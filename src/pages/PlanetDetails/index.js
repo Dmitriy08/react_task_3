@@ -2,11 +2,8 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import Loader from 'components/Loader';
 import ServerError from 'components/ServerError';
-// import planetsApiService from "services/planets";
-
 import apiService from 'services/planets';
 
 import { NotificationContext } from '../../components/Notification';
@@ -46,11 +43,6 @@ const initialState = {
 
 const PlanetDetails = ({ getData }) => {
   const { id } = useParams();
-  // const [planetInfo, setPlanetInfo] = useState(null);
-  // const [fetchStatus, setFetchStatus] = useState({
-  //   fetching: false,
-  //   error: false,
-  // });
 
   const notificationContext = useContext(NotificationContext);
 
@@ -128,16 +120,6 @@ const PlanetDetails = ({ getData }) => {
       </h1>
       <PlanetInfo id={id} planet={planetInfo} />
 
-      {/* <h2>Residents</h2>
-      <CharacterWrapper>
-        {planetInfo.map(url => (
-          <CharactersInfo key={url} id={getPeopleId(url)} />
-        ))}
-        {planetInfo.residents.length === 0 && (
-          <p>{planetInfo.name} has no residents</p>
-        )}
-      </CharacterWrapper> */}
-
       {characterInfo.length > 0 && (
         <>
           <h2>Residents</h2>
@@ -153,7 +135,7 @@ const PlanetDetails = ({ getData }) => {
                     alt={info.name}
                     className='img-rounded'
                   />
-                  <Link to={`/characters/${id}`}>{info.name}</Link>
+                  <Link to={`/character/${id}`}>{info.name}</Link>
                   <InfoWrapper>
                     <PlanetInfoRow name='Gender' value={info.gender} />
                   </InfoWrapper>

@@ -113,7 +113,7 @@ const CharacterDetails = ({ getData }) => {
   return (
     <div>
       <h1>
-        {starshipInfo.name}
+        {characterInfo.name}
         <NextCharacterLinkWrapper>
           <Link to={`/character/${+id + 1}`}>&rarr;</Link>
         </NextCharacterLinkWrapper>
@@ -129,7 +129,7 @@ const CharacterDetails = ({ getData }) => {
 
       {starshipInfo.length > 0 && (
         <>
-          <h2>Residents</h2>
+          <h2>StarShips</h2>
           <StarShipsWrapper>
             {starshipInfo.map(info => {
               const id = getStarShipId(info.url);
