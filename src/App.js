@@ -4,12 +4,16 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import Planets from "pages/Planets";
 import PlanetDetails from "pages/PlanetDetails";
+import Characters from "./pages/Characters";
+import CharacterDetails from "pages/CharacterDetails";
+import StarShips from "pages/StarShips";
+import StarShipsDetails from "pages/StarShipsDetails";
+
 import ErrorBoundary from "./components/ErrorBoundary";
 import Header from "./components/Header";
 import InterestingFacts from "./components/InterestingFacts";
 import NotificationProvider from "./components/Notification";
-import Characters from "./pages/Characters";
-import CharacterDetails from "pages/CharacterDetails";
+
 
 
 const App = () => {
@@ -41,6 +45,16 @@ const App = () => {
               <Route path="/character/:id">
                 <ErrorBoundary>
                  <CharacterDetails/>
+                </ErrorBoundary>
+              </Route>
+              <Route path="/(starships)?" exact>
+                <ErrorBoundary>
+                  <StarShips />
+                </ErrorBoundary>
+              </Route>
+              <Route path="/starship/:id">
+                <ErrorBoundary>
+                  <StarShipsDetails />
                 </ErrorBoundary>
               </Route>
               <Route>

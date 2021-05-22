@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useCharacter from '../../../hooks/useCharacter';
-import { getPeopleImageUrl } from '../../../utils';
-import CharacterInfoRow from '../../Characters/components/CharacterInfoRow';
+import { getStarShipImageUrl } from '../../../utils';
 
-export const CharacterWrapper = styled.div`
+import StarShipInfo from "../../StarShipsDetails/components/StarShipInfo";
+
+export const StarShipsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   img {
-    margin-bottom: 10px;
+    margin-bottom: 10px;  
     height: 110px;
     width: 80px;
   }
@@ -23,22 +24,22 @@ export const InfoWrapper = styled.div`
   gap: 6px;
 `;
 
-export default function CharactersInfo({ id }) {
+export default function StarshipsInfo({ id }) {
   const info = useCharacter(id);
 
-  const peopleURL = useMemo(() => getPeopleImageUrl(id), [id]);
+  const peopleURL = useMemo(() => getStarShipImageUrl(id), [id]);
 
   return info ? (
-    <CharacterWrapper>
+    <StarShipsWrapper>
       <img src={peopleURL} alt={info.name} className='img-rounded' />
-      <Link to={`/characters/${id}`}>{info.name}</Link>
+      <Link to={`/starship/${id}`}>{info.name}</Link>
       <InfoWrapper>
-        <CharacterInfoRow name='Gender' value={info.gender} />
+        <StarShipInfo name='Gender' value={info.gender} />
       </InfoWrapper>
       <InfoWrapper>
-        <CharacterInfoRow name='Birth day' value={info.birth_year} />
+        <StarShipInfo name='Birth day' value={info.birth_year} />
       </InfoWrapper>
-    </CharacterWrapper>
+    </StarShipsWrapper>
   ) : (
     ''
   );

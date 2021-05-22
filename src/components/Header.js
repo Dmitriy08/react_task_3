@@ -24,7 +24,7 @@ export default function Header() {
           <NavLink to="/films" component={LinkItem}>
             Films
           </NavLink>
-          <NavLink to="/startships" component={LinkItem}>
+          <NavLink to="/starships" component={LinkItem}>
             Starships
           </NavLink>
           <NavLink to="/species" component={LinkItem}>

@@ -7,21 +7,21 @@ import Loader from 'components/Loader';
 import ServerError from 'components/ServerError';
 // import charactersApiService from "services/characters";
 
-import apiService from 'services/characters';
+import apiService from 'services/starships';
 
 import { NotificationContext } from '../../components/Notification';
-import CharactersInfo, {
+import StarshipsInfo, {
   InfoWrapper,
-  CharacterWrapper as Cw,
-} from './components/CharactersInfo';
+  StarShipsWrapper as Sw,
+} from './components/StarshipsInfo';
 import CharacterInfo from './components/CharacterInfo';
-import { getPeopleId, getPeopleImageUrl } from '../../utils';
+import {getPeopleId, getPeopleImageUrl, getStarShipId, getStarShipImageUrl} from '../../utils';
 import withCharacter from '../../hoc/withCharacter';
 import { errorFetch, startFetch, successFetch } from './state/actions';
 import reducer from './state/reducer';
 import CharacterInfoRow from '../Characters/components/CharacterInfoRow';
 
-const CharacterWrapper = styled.div`
+const StarShipsWrapper = styled.div`
   display: flex;
   gap: 30px;
   flex-direction: row;
@@ -56,7 +56,7 @@ const CharacterDetails = ({ getData }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // const [characterInfo, setCharacterInfo] = useState([]);
+  const [starshipInfo, setStarshipInfo] = useState([]);
 
   // const { fetching, error, characterInfo } = fetchStatus;
   const { fetching, error, characterInfo } = state;
@@ -79,32 +79,32 @@ const CharacterDetails = ({ getData }) => {
   /**
    * Show characters all together
    */
-  //
-  // useEffect(() => {
-  //   if (!characterInfo?.residents) return;
-  //
-  //   const peoplePromises = characterInfo?.residents.map(url => {
-  //     const peopleId = url.replace(/^[\D]+|\/$/g, '');
-  //
-  //     return apiService.getCharacter(peopleId).then(res => res.json());
-  //   });
-  //
-  //   (async () => {
-  //     let peopleFullInfo = await Promise.allSettled(peoplePromises);
-  //
-  //     peopleFullInfo = peopleFullInfo
-  //       .map(({ status, value }) => {
-  //         return status === 'fulfilled' ? value : null;
-  //       })
-  //       .filter(info => info);
-  //
-  //     setCharacterInfo(peopleFullInfo);
-  //   })();
-  // }, [characterInfo?.residents]);
-  //
-  // /**
-  //  * End Show characters all together
-  //  */
+
+  useEffect(() => {
+    if (!characterInfo?.starships) return;
+
+    const starShipPromises = characterInfo?.starships.map(url => {
+      const starShipId = url.replace(/^[\D]+|\/$/g, '');
+
+      return apiService.getStarShip(starShipId).then(res => res.json());
+    });
+
+    (async () => {
+      let peopleFullInfo = await Promise.allSettled(starShipPromises);
+
+      peopleFullInfo = peopleFullInfo
+        .map(({ status, value }) => {
+          return status === 'fulfilled' ? value : null;
+        })
+        .filter(info => info);
+
+      setStarshipInfo(peopleFullInfo);
+    })();
+  }, [characterInfo?.starships]);
+
+  /**
+   * End Show characters all together
+   */
 
   if (fetching) return <Loader />;
   if (error) return <ServerError />;
@@ -113,7 +113,7 @@ const CharacterDetails = ({ getData }) => {
   return (
     <div>
       <h1>
-        {characterInfo.name}
+        {starshipInfo.name}
         <NextCharacterLinkWrapper>
           <Link to={`/character/${+id + 1}`}>&rarr;</Link>
         </NextCharacterLinkWrapper>
@@ -127,42 +127,32 @@ const CharacterDetails = ({ getData }) => {
       </h1>
       <CharacterInfo id={id} character={characterInfo} />
 
-      {/* <h2>Residents</h2>
-      <CharacterWrapper>
-        {characterInfo.map(url => (
-          <CharactersInfo key={url} id={getPeopleId(url)} />
-        ))}
-        {characterInfo.residents.length === 0 && (
-          <p>{characterInfo.name} has no residents</p>
-        )}
-      </CharacterWrapper> */}
-
-      {characterInfo.length > 0 && (
+      {starshipInfo.length > 0 && (
         <>
           <h2>Residents</h2>
-          <CharacterWrapper>
-            {characterInfo.map(info => {
-              const id = getPeopleId(info.url);
-              const peopleURL = getPeopleImageUrl(id);
+          <StarShipsWrapper>
+            {starshipInfo.map(info => {
+              const id = getStarShipId(info.url);
+              const peopleURL = getStarShipImageUrl(id);
 
               return (
-                <Cw key={id}>
+                <Sw key={id}>
                   <img
                     src={peopleURL}
                     alt={info.name}
                     className='img-rounded'
                   />
-                  <Link to={`/character/${id}`}>{info.name}</Link>
+                  <Link to={`/starship/${id}`}>{info.name}</Link>
                   <InfoWrapper>
-                    <CharacterInfoRow name='Gender' value={info.gender} />
+                    <CharacterInfoRow name='Model' value={info.model} />
                   </InfoWrapper>
                   <InfoWrapper>
-                    <CharacterInfoRow name='Birth day' value={info.birth_year} />
+                    <CharacterInfoRow name='Manufacturer' value={info.manufacturer} />
                   </InfoWrapper>
-                </Cw>
+                </Sw>
               );
             })}
-          </CharacterWrapper>
+          </StarShipsWrapper>
         </>
       )}
     </div>
